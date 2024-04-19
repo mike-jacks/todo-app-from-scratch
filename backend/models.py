@@ -1,14 +1,12 @@
-from pydantic import BaseModel
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Enum as SQLEnum
+from database import Base
 
-from enum import Enum
+from enums import Priority
 
 
-class Priority(Enum):
-    HIGH = "HIGH"
-    MODERATE = "MODERATE"
-    LOW = "LOW"
+class Todo(Base):
+    __tablename__ = "todo"
 
-class Todo(BaseModel):
-    id: int
-    priority: Priority
-    description: str 
+    id: int =  Column(Integer, primary_key=True)
+    priority: Priority = Column(SQLEnum(Priority, name="priority"), nullable=False)
+    description: str = Column(String)
