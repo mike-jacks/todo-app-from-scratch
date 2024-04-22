@@ -20,3 +20,4 @@ def delete_todo(db: Session, todo_id: int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Todo ID: {todo_id} not found.")
     db.delete(db_todo)
     db.commit()
+    return {"detail":f"Todo with todo id: {todo_id} has been deleted."}
