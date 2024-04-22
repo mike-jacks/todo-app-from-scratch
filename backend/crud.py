@@ -14,6 +14,16 @@ def create_todo(db: Session, todo: schemas.TodoCreate):
     db.refresh(db_todo)
     return db_todo
 
+def update_todo(db: Session, todo_id: int, todo: schemas.TodoUpdate):
+    db_todo = db.query(models.Todo).filter(models.Todo.id == todo_id).one_or_none()
+    if not db_todo:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Todo ID: {todo_id} not found.")
+    for attr, value in todo.model_dump().items():
+        setattr(db_todo, attr, value)
+    db.commit()
+    db.refresh(db_todo)
+    return db_todo
+
 def delete_todo(db: Session, todo_id: int):
     db_todo = db.query(models.Todo).filter(models.Todo.id == todo_id).one_or_none()
     if not db_todo:

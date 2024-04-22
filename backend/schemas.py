@@ -14,3 +14,6 @@ class Todo(TodoBase):
 
 class TodoCreate(TodoBase):
     pass
+
+class TodoUpdate(TodoBase):
+    pass
